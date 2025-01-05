@@ -27,12 +27,19 @@ button {
     background-color: black;
     color: white;
     padding: 10px 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    margin-bottom: 10px;
+
 }
-button:hover {
-    background-color: #555;
+
+.reveal-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:40px;
+    
+
 }
+
 .options {
     margin-bottom: 15px;
 }

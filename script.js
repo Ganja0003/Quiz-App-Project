@@ -41,10 +41,10 @@ const optionsContainer = document.querySelector('.options');
 const form = document.querySelector('#quizForm');
 const questionList = document.querySelector('.questionList');
 
+
 function displayQuestion() {
   const currentQuestion = quizQuestions[currentQuestionIndex];
   questionTitle.textContent = currentQuestion.question;
-
   const optionElements = currentQuestion.options.map(
     option => `
     <label>
@@ -53,7 +53,7 @@ function displayQuestion() {
     </label>
   `
   );
-  optionsContainer.innerHTML = optionElements.join('');
+  optionsContainer.innerHTML = optionElements.join(' ');
 }
 
 function submitForm(event) {
@@ -100,7 +100,7 @@ function showQuestions() {
       <ul>
         ${question.options.map(option => `<li>${option.text}</li>`).join('')}
       </ul>
-      <button onclick="revealAnswer(${index})">Reveal Answer</button>
+      <button class="reveal-button"onclick="revealAnswer(${index})">Reveal Answer</button>
       <p id="answer-${index}" style="display: none;">Correct Answer: ${
       question.options.find(option => option.isCorrect).text
     }</p>
