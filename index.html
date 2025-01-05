@@ -7,16 +7,18 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-
     <div class="formDivBox">
         <form id="quizForm">
             <h3 class="questionTitle"></h3>
             <div class="options"></div>
             <button type="submit">Submit</button>
         </form>
-    </div>
 
+       
+        <input type="text" placeholder="Search for questions" oninput="filterQuestions(this.value)">
+
+        <div class="questionList"></div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
