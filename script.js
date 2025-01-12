@@ -34,17 +34,24 @@ const quizQuestions = [
   },
 ];
 
-const submittedQuestions = [];
+let player1Score = 0;
+let player2Score = 0;
+let currentPlayer = 1;
 let currentQuestionIndex = 0;
+
 const questionTitle = document.querySelector('.questionTitle');
 const optionsContainer = document.querySelector('.options');
 const form = document.querySelector('#quizForm');
 const questionList = document.querySelector('.questionList');
 
+const player1ScoreHtml = document.getElementById('player1-score');
+const player2ScoreHtml = document.getElementById('player2-score');
+const currentTurnHtml = document.getElementById('current-turn');
 
 function displayQuestion() {
   const currentQuestion = quizQuestions[currentQuestionIndex];
   questionTitle.textContent = currentQuestion.question;
+
   const optionElements = currentQuestion.options.map(
     option => `
     <label>
@@ -53,7 +60,7 @@ function displayQuestion() {
     </label>
   `
   );
-  optionsContainer.innerHTML = optionElements.join(' ');
+  optionsContainer.innerHTML = optionElements.join('');
 }
 
 function submitForm(event) {
@@ -63,18 +70,21 @@ function submitForm(event) {
     alert('Please select an answer.');
     return;
   }
+
   const currentQuestion = quizQuestions[currentQuestionIndex];
   const isCorrect = currentQuestion.options.find(
     option => option.text === selectedOption.value
   ).isCorrect;
-  submittedQuestions.push({
-    question: currentQuestion.question,
-    selectedAnswer: selectedOption.value,
-    isCorrect: isCorrect,
-  });
 
   if (isCorrect) {
     alert(`Correct answer. Explanation: ${currentQuestion.explanation}`);
+    if (currentPlayer === 1) {
+      player1Score++;
+      player1ScoreHtml.textContent = player1Score;
+    } else {
+      player2Score++;
+      player2ScoreHtml.textContent = player2Score;
+    }
   } else {
     alert(`Wrong answer. Explanation: ${currentQuestion.explanation}`);
   }
@@ -82,39 +92,34 @@ function submitForm(event) {
   currentQuestionIndex++;
   if (currentQuestionIndex < quizQuestions.length) {
     displayQuestion();
+    if (currentPlayer === 1) {
+      currentPlayer = 2;
+    } else {
+      currentPlayer = 1;
+    }
+    currentTurnHtml.textContent = `Player ${currentPlayer}`;
   } else {
-    alert('You have completed the quiz!');
+    alert('quiz completed!');
     form.removeEventListener('submit', submitForm);
     form.innerHTML = '';
-    showQuestions(); 
+    stateWinner();
   }
 }
 
-function showQuestions() {
-  questionList.innerHTML = ''; 
-
-  quizQuestions.forEach((question, index) => {
-    const questionDiv = document.createElement('div');
-    questionDiv.innerHTML = `
-      <h3>${index + 1}. ${question.question}</h3>
-      <ul>
-        ${question.options.map(option => `<li>${option.text}</li>`).join('')}
-      </ul>
-      <button class="reveal-button"onclick="revealAnswer(${index})">Reveal Answer</button>
-      <p id="answer-${index}" style="display: none;">Correct Answer: ${
-      question.options.find(option => option.isCorrect).text
-    }</p>
-    `;
-    questionList.appendChild(questionDiv);
-  });
-}
-
-function revealAnswer(index) {
-  document.getElementById(`answer-${index}`).style.display = 'block';
+function stateWinner() {
+  const winningMessage = document.createElement('p');
+  if (player1Score > player2Score) {
+    winningMessage.textContent = 'player 1 won';
+  } else if (player2Score > player1Score) {
+    winningMessage.textContent = 'player 2 won';
+  } else {
+    winningMessage.textContent = "Its a tie!";
+  }
+  document.body.appendChild(winningMessage);
 }
 
 function filterQuestions(searchTerm) {
-  questionList.innerHTML = ''; 
+  questionList.innerHTML = '';
 
   quizQuestions.forEach(question => {
     if (question.question.toLowerCase().includes(searchTerm.toLowerCase())) {

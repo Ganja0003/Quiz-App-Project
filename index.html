@@ -7,18 +7,25 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="formDivBox">
+    <h1>Quiz App</h1>
+    <div class="player-info">
+        <p>Player 1 score: <span id="player1-score">0</span></p>
+        <p>player 2 score: <span id="player2-score">0</span></p>
+        <p>current turn is: <span id="current-turn">player 1</span></p>
+    </div>
+
+    <div class="formDivBox">      
         <form id="quizForm">
             <h3 class="questionTitle"></h3>
             <div class="options"></div>
             <button type="submit">Submit</button>
         </form>
 
-       
         <input type="text" placeholder="Search for questions" oninput="filterQuestions(this.value)">
 
         <div class="questionList"></div>
     </div>
+    
     <script src="script.js"></script>
 </body>
 </html>
