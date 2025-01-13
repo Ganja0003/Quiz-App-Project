@@ -43,10 +43,25 @@ const questionTitle = document.querySelector('.questionTitle');
 const optionsContainer = document.querySelector('.options');
 const form = document.querySelector('#quizForm');
 const questionList = document.querySelector('.questionList');
-
 const player1ScoreHtml = document.getElementById('player1-score');
 const player2ScoreHtml = document.getElementById('player2-score');
 const currentTurnHtml = document.getElementById('current-turn');
+const playerForm = document.getElementById('playerForm');
+const player1UI = document.getElementById('player1UI');
+const player2UI = document.getElementById('player2UI');
+
+
+playerForm.addEventListener("submit", function(event){
+  event.preventDefault();
+  const player1ValueName = document.getElementById('player1ValueName').value;
+  const player2ValueName = document.getElementById('player2ValueName').value;
+  
+  player1UI.textContent = player1ValueName
+  player2UI.textContent = player2ValueName
+
+  playerForm.classList.add('hidden');
+});
+
 
 function displayQuestion() {
   const currentQuestion = quizQuestions[currentQuestionIndex];
@@ -106,12 +121,16 @@ function submitForm(event) {
   }
 }
 
+
 function stateWinner() {
   const winningMessage = document.createElement('p');
+  const player1ValueName = document.getElementById('player1ValueName').value;
+  const player2ValueName = document.getElementById('player2ValueName').value;  
+
   if (player1Score > player2Score) {
-    winningMessage.textContent = 'player 1 won';
+    winningMessage.textContent = `${player1ValueName} Won`;
   } else if (player2Score > player1Score) {
-    winningMessage.textContent = 'player 2 won';
+    winningMessage.textContent = `${player2ValueName} Won`;
   } else {
     winningMessage.textContent = "Its a tie!";
   }
