@@ -117,8 +117,38 @@ function submitForm(event) {
     alert('quiz completed!');
     form.removeEventListener('submit', submitForm);
     form.innerHTML = '';
+    showQuestions(); 
     stateWinner();
   }
+}
+
+function showQuestions() {
+  questionList.innerHTML = ''; 
+  questionList.style.display = "flex"
+  questionList.style.height = "400px"
+
+  quizQuestions.forEach((question, index) => {
+    const questionDiv = document.createElement('div');
+    questionDiv.className = 'question-div';
+    questionDiv.innerHTML = `
+      <h3>${index + 1}. ${question.question}</h3>
+      <ul>
+        ${question.options.map(option => `<li>${option.text}</li>`).join('')}
+      </ul>
+      <button class="reveal-button"onclick="revealAnswer(${index})">Reveal Answer</button>
+      <p id="answer-${index}" style="display: none;">Correct Answer: ${
+      question.options.find(option => option.isCorrect).text
+    }</p>
+    `;
+    questionList.appendChild(questionDiv);
+  });
+
+  
+}
+
+
+function revealAnswer(index) {
+  document.getElementById(`answer-${index}`).style.display = 'block';
 }
 
 
