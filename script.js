@@ -94,11 +94,11 @@ function submitForm(event) {
     alert('quiz completed!');
     form.removeEventListener('submit', submitForm);
     form.innerHTML = '';
-    showQuestions(); 
     stateWinner();
   }
 }
 
+<<<<<<< HEAD
 function showQuestions() {
   questionList.innerHTML = ''; 
   questionList.style.display = "flex"
@@ -126,6 +126,8 @@ function showQuestions() {
 function revealAnswer(index) {
   document.getElementById(`answer-${index}`).style.display = 'block';
 }
+=======
+>>>>>>> parent of 81956e8 (While doing this weeks exercise i got rid of the function that reveals the anser for the questions at the end but now i have added it and beutified it.)
 
 function stateWinner() {
   const winningMessage = document.createElement('p');
