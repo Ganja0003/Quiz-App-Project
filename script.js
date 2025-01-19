@@ -1,4 +1,39 @@
-let quizQuestions = [];
+const quizQuestions = [
+  {
+    id: 1,
+    question: "What is the book sent to the Muslims called?",
+    options: [
+      { text: "Sunnah", isCorrect: false },
+      { text: "Quran", isCorrect: true },
+      { text: "Hadith", isCorrect: false },
+      { text: "Wudhu", isCorrect: false },
+    ],
+    explanation: "The book that is sent to the Muslims is called Quran.",
+  },
+  {
+    id: 2,
+    question: "What is the name of the last prophet in Islam?",
+    options: [
+      { text: "Musa", isCorrect: false },
+      { text: "Issa", isCorrect: false },
+      { text: "Muhammad", isCorrect: true },
+      { text: "Ibrahim", isCorrect: false },
+    ],
+    explanation: "The last prophet in Islam is Prophet Muhammad (peace be upon him).",
+  },
+  {
+    id: 3,
+    question: "What is the primary place of worship for Muslims?",
+    options: [
+      { text: "Church", isCorrect: false },
+      { text: "Synagog", isCorrect: false },
+      { text: "Mosque", isCorrect: true },
+      { text: "Temple", isCorrect: false },
+    ],
+    explanation: "The primary place of worship for Muslims is a mosque.",
+  },
+];
+
 let player1Score = 0;
 let player2Score = 0;
 let currentPlayer = 1;
@@ -15,30 +50,18 @@ const playerForm = document.getElementById('playerForm');
 const player1UI = document.getElementById('player1UI');
 const player2UI = document.getElementById('player2UI');
 
+
 playerForm.addEventListener("submit", function(event){
   event.preventDefault();
   const player1ValueName = document.getElementById('player1ValueName').value;
   const player2ValueName = document.getElementById('player2ValueName').value;
-  
+
   player1UI.textContent = player1ValueName
   player2UI.textContent = player2ValueName
 
   playerForm.classList.add('hidden');
 });
 
-async function fetchQuizData() {
-  try {
-    const response = await fetch('https://raw.githubusercontent.com/Ganja0003/Ganja0003.github.io/refs/heads/main/apis/data.json');
-    if (!response.ok) {
-      return(`There is an error fetching the quiz data: ${response.statusText}`);
-    }
-    quizQuestions = await response.json();
-    displayQuestion();
-  } catch (err) {
-    console.error(err.message);
-    alert('Failed, cant load quiz data');
-  }
-}
 
 function displayQuestion() {
   const currentQuestion = quizQuestions[currentQuestionIndex];
@@ -94,16 +117,15 @@ function submitForm(event) {
     alert('quiz completed!');
     form.removeEventListener('submit', submitForm);
     form.innerHTML = '';
+    showQuestions(); 
     stateWinner();
   }
 }
 
-<<<<<<< HEAD
 function showQuestions() {
   questionList.innerHTML = ''; 
   questionList.style.display = "flex"
   questionList.style.height = "400px"
-
   quizQuestions.forEach((question, index) => {
     const questionDiv = document.createElement('div');
     questionDiv.className = 'question-div';
@@ -119,15 +141,11 @@ function showQuestions() {
     `;
     questionList.appendChild(questionDiv);
   });
-
   
 }
-
 function revealAnswer(index) {
   document.getElementById(`answer-${index}`).style.display = 'block';
 }
-=======
->>>>>>> parent of 81956e8 (While doing this weeks exercise i got rid of the function that reveals the anser for the questions at the end but now i have added it and beutified it.)
 
 function stateWinner() {
   const winningMessage = document.createElement('p');
@@ -156,5 +174,5 @@ function filterQuestions(searchTerm) {
   });
 }
 
-fetchQuizData();
+displayQuestion();
 form.addEventListener('submit', submitForm);
