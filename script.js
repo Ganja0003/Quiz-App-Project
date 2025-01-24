@@ -26,19 +26,16 @@ playerForm.addEventListener("submit", function(event){
   playerForm.classList.add('hidden');
 });
 
-async function fetchQuizData() {
-  try {
-    const response = await fetch('https://raw.githubusercontent.com/Ganja0003/Ganja0003.github.io/refs/heads/main/apis/data.json');
-    if (!response.ok) {
-      return(`There is an error fetching the quiz data: ${response.statusText}`);
-    }
-    quizQuestions = await response.json();
-    displayQuestion();
-  } catch (err) {
-    console.error(err.message);
-    alert('Failed, cant load quiz data');
-  }
-}
+
+
+
+fetch('https://raw.githubusercontent.com/Ganja0003/Ganja0003.github.io/refs/heads/main/apis/data.json')
+.then(response => response.json())
+.then(data => quizQuestions = data)
+.then(displayQuestion)
+.catch(err => console.log(`failed to fetch:${err}`))
+
+
 
 function displayQuestion() {
   const currentQuestion = quizQuestions[currentQuestionIndex];
@@ -154,5 +151,5 @@ function filterQuestions(searchTerm) {
   });
 }
 
-fetchQuizData();
+
 form.addEventListener('submit', submitForm);
