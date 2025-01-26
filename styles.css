@@ -1,0 +1,70 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    background-color: black;
+    color: white;
+}
+
+.player-info {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.formDivBox {
+    min-height: 400px;
+    width: 400px;
+    background-color: pink;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+}
+
+.reveal-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+}
+
+.options {
+    margin-bottom: 15px;
+}
+
+h1 {
+    color: white;
+}
+
+p{
+    color: white;
+}
+
+.searchBox {
+    font-size: 18px;        
+    color: black;  
+    margin-top: 10px;           
+    margin-right: 8px;       
+    cursor: pointer;         
+  }
