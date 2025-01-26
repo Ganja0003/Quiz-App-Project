@@ -10,18 +10,18 @@
     <h1>Quiz App</h1>
     <div class="player-info">
         <form id="playerForm">
-            <label for="player1ValueName">player 1:</label>
-            <input type="text" name="player1Name" id="player1ValueName" required/> 
+            <label for="player1ValueNameFromInput">player 1:</label>
+            <input type="text" name="player1Name" id="player1ValueNameFromInput" required/> 
             <br />
-            <label for="player2ValueName">Player 2:</label>
-            <input type="text" name="player2Name" id="player2ValueName" required/> 
+            <label for="player2ValueNameFromInput">Player 2:</label>
+            <input type="text" name="player2Name" id="player2ValueNameFromInput" required/> 
             <br />
             <button type="submit">Submit</button>
         </form>
         
-            <p> <span id="player1UI">Player 1 score:</span>  <span id="player1-score">0</span></p>
-            <p> <span id="player2UI">Player 2 score:</span>  <span id="player2-score">0</span></p>
-            <p>current turn is: <span id="current-turn">player 1</span></p>
+        <p> <span id="player1Name">Player 1 score:</span>  <span id="player1-score">0</span></p>
+        <p> <span id="player2Name">Player 2 score:</span>  <span id="player2-score">0</span></p>
+        <p>current turn is: <span id="current-turn">player 1</span></p>
     </div>
 
     <div class="formDivBox">      
@@ -31,7 +31,9 @@
             <button type="submit">Submit</button>
         </form>
 
-        <input type="text" placeholder="Search for questions" oninput="filterQuestions(this.value)">
+
+        <label for="searchBox" class="searchBox">Search For Questions</label>
+        <input type="text" id="searchBox"placeholder="Search for questions" oninput="filterQuestions(this.value)">
 
         <div class="questionList"></div>
     </div>

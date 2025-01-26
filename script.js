@@ -1,34 +1,44 @@
+
+// Quizquestions array which are fetched from a json file and currentQuestionIndex to keep track of who turn it is 
 let quizQuestions = [];
+let currentQuestionIndex = 0;
+
+// these store scores for both players and know whose turn it is
 let player1Score = 0;
 let player2Score = 0;
 let currentPlayer = 1;
-let currentQuestionIndex = 0;
 
+// These will connect to the user interface to display the players,names, scores and the current turn
+const playerForm = document.getElementById('playerForm');
+const playerName1UI = document.getElementById('player1Name');
+const player1ScoreUI = document.getElementById('player1-score');
+const playerName2UI = document.getElementById('player2Name');
+const player2ScoreUI = document.getElementById('player2-score');
+const currentTurnUI = document.getElementById('current-turn');
+
+// These connect to the user interface to show the quiz form, question, and the options they can choose from.
+const form = document.querySelector('#quizForm');
 const questionTitle = document.querySelector('.questionTitle');
 const optionsContainer = document.querySelector('.options');
-const form = document.querySelector('#quizForm');
 const questionList = document.querySelector('.questionList');
-const player1ScoreHtml = document.getElementById('player1-score');
-const player2ScoreHtml = document.getElementById('player2-score');
-const currentTurnHtml = document.getElementById('current-turn');
-const playerForm = document.getElementById('playerForm');
-const player1UI = document.getElementById('player1UI');
-const player2UI = document.getElementById('player2UI');
 
-playerForm.addEventListener("submit", function(event){
+
+
+//Function that is executed when the playerForm is submited and they have to input there names or anything
+playerForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  const player1ValueName = document.getElementById('player1ValueName').value;
-  const player2ValueName = document.getElementById('player2ValueName').value;
+  const player1ValueName = document.getElementById('player1ValueNameFromInput').value;
+  const player2ValueName = document.getElementById('player2ValueNameFromInput').value;
   
-  player1UI.textContent = player1ValueName
-  player2UI.textContent = player2ValueName
+  playerName1UI.textContent = player1ValueName
+  playerName2UI.textContent = player2ValueName
 
-  playerForm.classList.add('hidden');
+  playerForm.style.display ='none'
 });
 
 
 
-
+//fetches from a json file where Quizquestions is located
 fetch('https://raw.githubusercontent.com/Ganja0003/Ganja0003.github.io/refs/heads/main/apis/data.json')
 .then(response => response.json())
 .then(data => quizQuestions = data)
@@ -37,6 +47,7 @@ fetch('https://raw.githubusercontent.com/Ganja0003/Ganja0003.github.io/refs/head
 
 
 
+//Function that dislpays the question, and the choices you can make, and it will be called aslong as there is questions left.
 function displayQuestion() {
   const currentQuestion = quizQuestions[currentQuestionIndex];
   questionTitle.textContent = currentQuestion.question;
@@ -52,6 +63,9 @@ function displayQuestion() {
   optionsContainer.innerHTML = optionElements.join('');
 }
 
+
+
+// Function that is responsible for handling the player's answer to a quiz question. It checks whether the player's choice is correct, updates the player's score, and moves the game to the next question or ends the quiz when all questions are answered.
 function submitForm(event) {
   event.preventDefault();
   const selectedOption = document.querySelector('input[name="answer"]:checked');
@@ -61,6 +75,7 @@ function submitForm(event) {
   }
 
   const currentQuestion = quizQuestions[currentQuestionIndex];
+
   const isCorrect = currentQuestion.options.find(
     option => option.text === selectedOption.value
   ).isCorrect;
@@ -69,10 +84,10 @@ function submitForm(event) {
     alert(`Correct answer. Explanation: ${currentQuestion.explanation}`);
     if (currentPlayer === 1) {
       player1Score++;
-      player1ScoreHtml.textContent = player1Score;
+      player1ScoreUI.textContent = player1Score;
     } else {
       player2Score++;
-      player2ScoreHtml.textContent = player2Score;
+      player2ScoreUI.textContent = player2Score;
     }
   } else {
     alert(`Wrong answer. Explanation: ${currentQuestion.explanation}`);
@@ -86,7 +101,7 @@ function submitForm(event) {
     } else {
       currentPlayer = 1;
     }
-    currentTurnHtml.textContent = `Player ${currentPlayer}`;
+    currentTurnUI.textContent = `Player ${currentPlayer}`;
   } else {
     alert('quiz completed!');
     form.removeEventListener('submit', submitForm);
@@ -96,34 +111,41 @@ function submitForm(event) {
   }
 }
 
+
+
+// Function this shows all the quiz questions after the game is finished, and lets the players see the questions and the correct answers.
 function showQuestions() {
   questionList.innerHTML = ''; 
   questionList.style.display = "flex"
   questionList.style.height = "400px"
 
-  quizQuestions.forEach((question, index) => {
+  quizQuestions.forEach(  (quizQuestion, index) => {
     const questionDiv = document.createElement('div');
     questionDiv.className = 'question-div';
     questionDiv.innerHTML = `
-      <h3>${index + 1}. ${question.question}</h3>
+      <h3>${index + 1}. ${quizQuestion.question}</h3>
       <ul>
-        ${question.options.map(option => `<li>${option.text}</li>`).join('')}
+        ${quizQuestion.options.map((option) => `<li>${option.text}</li>`).join('')}
       </ul>
       <button class="reveal-button"onclick="revealAnswer(${index})">Reveal Answer</button>
       <p id="answer-${index}" style="display: none;">Correct Answer: ${
-      question.options.find(option => option.isCorrect).text
+        quizQuestion.options.find(option => option.isCorrect).text
     }</p>
     `;
     questionList.appendChild(questionDiv);
   });
-
-  
 }
 
+
+
+// Function shows the correct answer for a specific question when the player clicks the "Reveal Answer" button.
 function revealAnswer(index) {
   document.getElementById(`answer-${index}`).style.display = 'block';
 }
 
+
+
+// Function is used to display the winner of the quiz game after all questions have been answered it compares the players' scores and shows a message announcing who won or if it's a tie
 function stateWinner() {
   const winningMessage = document.createElement('p');
   const player1ValueName = document.getElementById('player1ValueName').value;
@@ -139,13 +161,16 @@ function stateWinner() {
   document.body.appendChild(winningMessage);
 }
 
-function filterQuestions(searchTerm) {
+
+
+// Function that filters and display quiz questions based on the user’s input. It will only show the questions that match the input the userInput.
+function filterQuestions(userInput) {
   questionList.innerHTML = '';
 
-  quizQuestions.forEach(question => {
-    if (question.question.toLowerCase().includes(searchTerm.toLowerCase())) {
+  quizQuestions.forEach((quizQuestion) => {
+    if (quizQuestion.question.toLowerCase().includes(userInput.toLowerCase())) {
       const questionDiv = document.createElement('div');
-      questionDiv.textContent = question.question;
+      questionDiv.textContent = quizQuestion.question;
       questionList.appendChild(questionDiv);
     }
   });

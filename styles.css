@@ -62,6 +62,15 @@ p{
 }
 
 
-.hidden{
+/* .hidden{
     display: none;
-}
+} */
+
+
+.searchBox {
+    font-size: 18px;        
+    color: black;  
+    margin-top: 10px;           
+    margin-right: 8px;       
+    cursor: pointer;         
+  }
