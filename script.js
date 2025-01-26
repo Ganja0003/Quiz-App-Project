@@ -39,11 +39,15 @@ playerForm.addEventListener("submit", (event) => {
 
 
 //fetches from a json file where Quizquestions is located
-fetch('https://raw.githubusercontent.com/Ganja0003/Ganja0003.github.io/refs/heads/main/apis/data.json')
-.then(response => response.json())
-.then(data => quizQuestions = data)
-.then(displayQuestion)
-.catch(err => console.log(`failed to fetch:${err}`))
+async function fetchQuestions(){
+  try {
+    const response = await fetch('https://raw.githubusercontent.com/Ganja0003/Ganja0003.github.io/refs/heads/main/apis/data.json');
+    quizQuestions = await response.json();
+    displayQuestion();
+  } catch (error) {
+    console.log(`failed to fetch:${err}`)
+  }
+}
 
 
 
@@ -176,5 +180,5 @@ function filterQuestions(userInput) {
   });
 }
 
-
+fetchQuestions();
 form.addEventListener('submit', submitForm);
