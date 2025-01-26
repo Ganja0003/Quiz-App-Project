@@ -120,7 +120,7 @@ function submitForm(event) {
 // Function this shows all the quiz questions after the game is finished, and lets the players see the questions and the correct answers.
 function showQuestions() {
   questionList.innerHTML = ''; 
-  questionList.style.display = "flex"
+  questionList.style.display = "flex";
   questionList.style.height = "400px"
 
   quizQuestions.forEach(  (quizQuestion, index) => {
