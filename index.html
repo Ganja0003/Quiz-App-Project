@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Quiz App</h1>
+    <div class="player-info">
+        <form id="playerForm">
+            <label for="player1ValueNameFromInput">player 1:</label>
+            <input type="text" name="player1Name" id="player1ValueNameFromInput" required/> 
+            <br />
+            <label for="player2ValueNameFromInput">Player 2:</label>
+            <input type="text" name="player2Name" id="player2ValueNameFromInput" required/> 
+            <br />
+            <button type="submit">Submit</button>
+        </form>
+        
+        <p> <span id="player1Name">Player 1 score:</span>  <span id="player1-score">0</span></p>
+        <p> <span id="player2Name">Player 2 score:</span>  <span id="player2-score">0</span></p>
+        <p>Current player turn is: <span id="current-turn"></span></p>
+    </div>
+
+    <div class="formDivBox">      
+        <form id="quizForm">
+            <h3 class="questionTitle"></h3>
+            <div class="options"></div>
+            <button type="submit">Submit</button>
+        </form>
+
+
+        <label for="searchBox" class="searchBox">Search For Questions</label>
+        <input type="text" id="searchBox"placeholder="Search for questions" oninput="filterQuestions(this.value)">
+
+        <div class="questionList"></div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
