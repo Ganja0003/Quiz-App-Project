@@ -24,14 +24,20 @@ const questionList = document.querySelector('.questionList');
 
 
 
+
+
+
+
 //Function that is executed when the playerForm is submited and they have to input there names or anything
 playerForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const player1ValueName = document.getElementById('player1ValueNameFromInput').value;
   const player2ValueName = document.getElementById('player2ValueNameFromInput').value;
   
-  playerName1UI.textContent = player1ValueName
-  playerName2UI.textContent = player2ValueName
+  playerName1UI.textContent = `${player1ValueName}:`
+  playerName2UI.textContent = `${player2ValueName}:`
+
+  currentTurnUI.textContent = currentPlayer === 1 ? player1ValueName : player2ValueName;
 
   playerForm.style.display ='none'
 });
@@ -105,7 +111,7 @@ function submitForm(event) {
     } else {
       currentPlayer = 1;
     }
-    currentTurnUI.textContent = `Player ${currentPlayer}`;
+    currentTurnUI.textContent = `${currentPlayer === 1 ? playerName1UI.textContent : playerName2UI.textContent}`;
   } else {
     alert('quiz completed!');
     form.removeEventListener('submit', submitForm);
@@ -152,17 +158,16 @@ function revealAnswer(index) {
 // Function is used to display the winner of the quiz game after all questions have been answered it compares the players' scores and shows a message announcing who won or if it's a tie
 function stateWinner() {
   const winningMessage = document.createElement('p');
-  const player1ValueName = document.getElementById('player1ValueName').value;
-  const player2ValueName = document.getElementById('player2ValueName').value;  
 
   if (player1Score > player2Score) {
-    winningMessage.textContent = `${player1ValueName} Won`;
+    winningMessage.textContent = `${playerName1UI.textContent} Won 🏆`;
   } else if (player2Score > player1Score) {
-    winningMessage.textContent = `${player2ValueName} Won`;
+    winningMessage.textContent = `${playerName2UI.textContent} Won 🏆`;
   } else {
     winningMessage.textContent = "Its a tie!";
   }
   document.body.appendChild(winningMessage);
+  console.log(winningMessage)
 }
 
 
