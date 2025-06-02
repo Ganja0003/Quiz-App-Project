@@ -37,7 +37,7 @@ Check out the live version of this project here: [Live Demo](https://quiz-app-pr
 
 ---
 
-## 🔮 Future Plans
+## 💡 Project Ideas
 
 I have a lot of ideas for this project and plan to improve it in the future. Some of the enhancements I’m planning include:
 
